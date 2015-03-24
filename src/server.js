@@ -8,6 +8,8 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('./config/environment');
+var mount = require('koa-mount');
+
 
 // Bootstrap server
 var app = require('koa')();

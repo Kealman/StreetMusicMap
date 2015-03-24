@@ -23,4 +23,7 @@ exports.index = function*(next) {
   var a = yield genFunc();
   console.log(a);
   console.log("end");
+  this.body = {
+    test: 'test'
+  }
 };
