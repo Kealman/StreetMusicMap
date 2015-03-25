@@ -18,19 +18,73 @@ body, html {
 }
 div#content-block {
   position: fixed;
-  height: 100%;
   width: 646px;
-  top: 0;
+  top: 60px;
   right: 1px;
+  bottom: 0px;
   //background: #0000AA;
 }
+
+div#navbar {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  background: #0732a2;
+}
+
 #mapView {
   bottom: 0;
   right: 646px;
   position: fixed;
   left: 0;
-  top: 0px;
+  top: 60px;
   z-index: 1;
+}
+
+.new-event-button {
+  color: white;
+}
+.event-wrap {
+  background: #fff;
+  border-left: 5px solid transparent;
+  margin: 0;
+  overflow: hidden;
+  padding: 5px .5%;
+  position: relative;
+  width: auto;
+}
+
+.event-wrap:hover {
+  background: #f4f9fc;
+}
+
+.event-description {
+  border-radius: 3px;
+  //background: #fef9ea;
+  border-left: 0;
+  padding: 5px;
+}
+
+.event-description-text {
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  font-size: 12px;
+}
+
+.event-name {
+  color: #2d5be3;
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.event-description-avatar {
+  width: 30px;
+  height: 30px;
+}
+
+.content-block {
+  overflow: auto;
 }
 // injector
 // endinjector

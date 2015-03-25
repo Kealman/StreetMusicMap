@@ -5,13 +5,27 @@ angular.module('streetMusicMap', ['ngCookies', 'ngTouch', 'ngSanitize', 'restang
     $stateProvider
       .state('main', {
         url: '/',
+        resolve: {
+          events: ['Restangular',function(Restangular){
+            return Restangular.all('events')
+              .getList();
+          }],
+          cities: ['Restangular',function(Restangular){
+            return Restangular.all('cities')
+              .getList();
+          }]
+        },
         views: {
-          '': {
-            templateUrl: 'app/main/views/layout.html'
+          'main': {
+            templateUrl: 'app/main/views/layout.html',
+            controller: 'MainCtrl'
+          },
+          'navbar@main': {
+              templateUrl: 'app/main/views/navbar.html'
           },
           'map@main': {
-            templateUrl: 'app/main/views/main.html',
-            controller: 'MainCtrl'
+            templateUrl: 'app/main/views/main.html'//,
+            //controller: 'MainCtrl'
           },
           'content@main': {
             templateUrl: 'app/main/views/content.html'

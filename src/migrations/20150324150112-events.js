@@ -5,6 +5,7 @@ exports.up = function(knex) {
 
     table.increments("id").primary();
     table.string("name", 255).notNullable();
+    table.text('description');
     table.float('lat').notNullable();
     table.float('lng').notNullable();
 

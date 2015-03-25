@@ -8,8 +8,9 @@ var config = require('./environment');
 var morgan = require('koa-morgan');
 
 module.exports = function(app) {
-    
-   // Logger 
+
+   // Logger
    app.use(morgan.middleware(config.logType));
-  
+
+
 };
