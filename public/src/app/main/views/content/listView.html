@@ -1,7 +1,7 @@
 <div>
   <div ng-repeat="event in events">
     <div ng-mouseover="toggleMarkerFocus(event, true)" ng-mouseleave="toggleMarkerFocus(event, false)" class="event-wrap">
-      <div class="event-name">{{event.name}}</div>
+      <div class="event-name" ng-click="moveToEvent(event)">{{event.name}}</div>
 
       <div class="media">
         <div class="media-left">

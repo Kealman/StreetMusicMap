@@ -6,10 +6,13 @@ angular.module('streetMusicMap')
     'Restangular',
     'events',
     'cities',
-    function ($scope, Restangular, events, cities) {
+    '$timeout',
+    'leafletData',
+    function ($scope, Restangular, events, cities, $timeout, leafletData) {
 
       var restEvents = Restangular.all('events');
 
+      var markers = {};
 
       function getEmptyForm () {
           return {
@@ -22,14 +25,30 @@ angular.module('streetMusicMap')
 
       function setEvents (events) {
         $scope.events = events;
+        leafletData.getMap('mainMap')
+        .then(function(map){
+            events.forEach(function(item){
+               var marker = L.marker([item.lat, item.lng]).bindPopup(item.name);
+               marker.addTo(map);
+               markers[item.id] = marker;
+            });
+          });
 
-        events.forEach(function(item){
-          $scope.markers[item.name] = {
-            lat: item.lat,
-            lng: item.lng,
-            message: item.name
-          }
-        });
+      }
+
+      function setCenter(coords, zoom){
+        return leafletData.getMap('mainMap')
+          .then(function(map){
+            var mapZoom = map.getZoom();
+            var latlng = L.latLng(coords.lat, coords.lng);
+            if(zoom !== mapZoom){
+              map.setView(latlng);
+              map.setZoom(zoom, {animate: true, easeLinearity: 0.99});
+            } else {
+              console.log('oan');
+              map.panTo(latlng, {animate: true});
+            }
+          });
       }
 
       function init(){
@@ -83,9 +102,22 @@ angular.module('streetMusicMap')
         };
 
         $scope.toggleMarkerFocus = function(marker, focus){
-           $scope.markers[marker.name].focus = focus;
-        }
+          // $scope.markers[marker.name].focus = focus;
+        };
+
+        $scope.moveToEvent = function(event){
+          //$scope.markers[event.name].focus = true;
+          setCenter({lat: event.lat, lng: event.lng}, 15).then(function(){
+            markers[event.id].openPopup();
+          });
+
+        };
+
+        $scope.setCity = function (activeCity) {
+          setCenter({lat: activeCity.lat, lng: activeCity.lng}, activeCity.zoom);
+        };
       }
+
 
 
       $scope.mapEvents = {
@@ -96,6 +128,11 @@ angular.module('streetMusicMap')
       };
 
       init();
+
+      leafletData.getMap('mainMap')
+      .then(function(map){
+         // console.log(L.marker([0, 0]).addTo(map).getLatLng());
+      });
 
       $scope.$on('leafletDirectiveMap.click', function(event, lev){
         if(!$scope.newEvent) {
@@ -121,13 +158,7 @@ angular.module('streetMusicMap')
       });
 
 
-      $scope.rt = function (activeCity) {
-        $scope.center = {
-          lat: activeCity.lat,
-          lng: activeCity.lng,
-          zoom: activeCity.zoom
-        };
-      };
+
 
       $scope.saveNewEvent = function(eventForm){
         angular.extend(eventForm, {

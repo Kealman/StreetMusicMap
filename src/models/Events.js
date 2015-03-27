@@ -8,7 +8,7 @@ var pg = require('lib/db/pg');
 var Events = {};
 
 Events.getAll = function(){
-    return pg.select("name", "lat", "lng", "description")
+    return pg.select("id","name", "lat", "lng", "description")
              .from('events');
 };
 

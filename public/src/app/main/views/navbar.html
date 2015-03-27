@@ -1,5 +1,5 @@
 <div class="navbar-content">
-  <select ng-model="activeCity" ng-change="rt(activeCity)" ng-options="city.name for city in cities"></select>
+  <select ng-model="activeCity" ng-change="setCity(activeCity)" ng-options="city.name for city in cities"></select>
   <div ng-click="toggleNewEvent()" class="new-event-button glyphicon glyphicon-plus" ng-class="{'glyphicon-remove': content === 'new'}">
   </div>
 </div>
